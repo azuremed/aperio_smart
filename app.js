@@ -47,6 +47,18 @@ async function fetchSampleById(id_amostra) {
   }
 }
 
+// Função para testar a conexão com o banco de dados
+async function testDatabaseConnection() {
+  try {
+    const pool = await sql.connect(config);
+    console.log('Conexão com o banco de dados bem-sucedida!');
+    await pool.close(); // Fecha a conexão após o teste
+  } catch (err) {
+    console.error('Erro ao conectar ao banco de dados:', err.message);
+    process.exit(1); // Encerra a aplicação caso a conexão falhe
+  }
+}
+
 // Rota para buscar dados pelo id_amostra
 app.get('/amostra/:id_amostra', async (req, res) => {
   const { id_amostra } = req.params;
@@ -72,9 +84,11 @@ app.get('/amostra/:id_amostra', async (req, res) => {
   }
 });
 
-// Inicia o servidor
-app.listen(port, () => {
-  console.log(`Servidor rodando em http://0.0.0.0:${port}`);
+// Testa a conexão com o banco antes de iniciar o servidor
+testDatabaseConnection().then(() => {
+  app.listen(port, () => {
+    console.log(`Servidor Comunicacao Smart rodando em 0.0.0.0:${port}`);
+  });
 });
 
 /*

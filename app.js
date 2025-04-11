@@ -74,7 +74,7 @@ app.get('/amostra/:id_amostra', async (req, res) => {
 
 // Inicia o servidor
 app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`);
+  console.log(`Servidor rodando em http://0.0.0.0:${port}`);
 });
 
 /*
